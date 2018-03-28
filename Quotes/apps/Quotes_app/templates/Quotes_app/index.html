@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Login And Registration</title>
+</head>
+<body>
+<h2>REGISTRA-SON! HA! GET IT??.... Ok, it's Registration:</h2>
+<!-- Registration -->
+	<form action="/register" method="post">
+	{% csrf_token %}
+		<label>Name:</label>
+		<input type="text" name="name">
+
+		<label>Username:</label>
+		<input type="text" name="username">
+
+		<label>Email:</label>
+		<input type="text" name="email">
+
+		<label>Password</label>
+		<input type="password" name="password">
+
+		<label>Confirm Password</label>
+		<input type="password" name="password_confirmation">
+
+		<label>Date of Birth:</label>
+		<input type="date" name="birthdate">
+
+		<!-- Submit Button -->
+		<input type="submit" value="Register">
+	</form>
+<!-- Show Registration Messages -->
+	{% if messages %}
+		{% for message in messages %}
+			{% if 'registration' in message.tags %}
+				<p>{{ message }}</p>
+			{% endif %}
+		{% endfor %}
+    {% endif %}
+
+    <!-- Login -->
+	<h2>LOG-SP-IN! HA! GOTCH YOU AGAIN YOU CHICKEN F***ER! Ok fine... it's Login:</h2>
+	<form action="/login" method="post">
+	{% csrf_token %}
+		<label>Email:</label>
+		<input type="text" name="email">
+		<label>Password:</label>
+		<input type="password" name="password">
+		<input type="submit" value="Login">
+    </form>
+    
+<!-- Display Log In Messages -->
+	{% if messages %}
+		{% for message in messages %}
+			{% if 'login' in message.tags %}
+				<p>{{ message }}</p>
+			{% endif %}
+		{% endfor %}
+	{% endif %}
+</body>
+</html>

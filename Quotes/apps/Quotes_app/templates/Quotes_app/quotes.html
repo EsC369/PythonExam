@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Quotes</title>
+</head>
+<body>
+    <h1>Welcome, {{ user.name }}! <br> I Havent Seen You Since I Had Eyes! Sincerely: NoEyed Jimbo</h1>
+    <a href="/logout">Logout</a>
+
+    <!-- Quotable Quotes -->
+    <p>Quotable Quotes:</p>
+    <div id="quotes" style="overflow:scroll;">
+        {% for quote in quotable_quotes %}
+            <div class = "one_quote">
+                <p>{{ quote.author }}:{{ quote.content }}</p>
+                <p>posted by:<a href="/users/{{quote.poster.id}}">{{ quote.poster.name }}</a></p>
+                <a href="/add_favorite/{{quote.id}}">Add to My List</a>
+            </div>
+        {% endfor %}
+    </div>
+
+<!-- User's Favorite Quotes -->
+    <p>Your Favorites:</p>
+    <div id="quotes" style="overflow:scroll;">
+        {% for favorite in favorites %}
+                <div class="one_quote">
+                <p>{{ favorite.author }}:{{ favorite.content }}</p>
+                    <p>posted by:<a href="/users/{{favorite.poster.id}}">{{ favorite.poster.name }}</a></p>
+                <a href="/remove_favorite/{{favorite.id}}">Remove from My List</a>
+            </div>
+        {% endfor %}
+        </div>
+    <!-- Quote validation messages  -->
+    {% if messages %}
+        {% for message in messages %}
+            {% if 'add_item' in message.tags %}
+                <p>{{ message }}</p>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+
+    Contribute a Quote:
+        <form action="/create" method="post">
+    {% csrf_token %}
+        <label>Quoted By:</label>
+        <input type="text" name="author">
+        <label>Message:</label>
+        <textarea name="content"></textarea>
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>
